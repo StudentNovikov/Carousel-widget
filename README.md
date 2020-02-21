@@ -1,5 +1,5 @@
 # Carousel-widget
-Description:
+DESCRIPTION:
 We need a carousel widget to have the ability to demonstrate a set of products to customers, give them ability to look through all products in set, both at desktop and mobile devices.
 
 AC:
