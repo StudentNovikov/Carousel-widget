@@ -32,15 +32,13 @@ class Carousel{
     const gridContainer = document.createElement('div');
     gridContainer.classList.add(`carousel-inner`);
     gridContainer.innerHTML = 'some temp text just to see this div';
-    
+
     const buttonPrev = document.createElement('button');
     buttonPrev.innerHTML = 'PREVIOUS';
     buttonPrev.classList.add('btn','slide-btn-prev');
 
     container.appendChild(buttonPrev);
     container.appendChild(gridContainer);
-
-
 
     const buttonNext = document.createElement('button');
     buttonNext.innerHTML = 'NEXT';
