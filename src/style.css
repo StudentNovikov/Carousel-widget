@@ -39,9 +39,31 @@
 .placeForCarousel{
   width:80%;
   border:3px greenyellow solid;
-  margin: 0 auto;
+  margin-top: 100px;
 }
 
 .btn{
   padding:10px;
+}
+
+.slider{
+  display: flex;
+  margin:50px 0;
+  background: aliceblue;
+  text-align: center;
+  border: 2px solid gray;
+  border-radius: 5px;
+  padding:10px;
+}
+
+.slider img{
+  width: 200px;
+}
+
+.content{
+  opacity: 0.5;
+}
+
+.content.active{
+  opacity: 1;
 }
