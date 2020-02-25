@@ -47,6 +47,7 @@
 }
 
 .slider{
+  position:relative;
   display: flex;
   margin:50px 0;
   background: aliceblue;
@@ -68,13 +69,13 @@
   opacity: 1;
 }
 
-.buttons button#next{
+.buttons button.next{
   position:absolute;
   top:50%;
   right:15px;
 }
 
-.buttons button#prev{
+.buttons button.prev{
   position:absolute;
   top:50%;
   left:15px;

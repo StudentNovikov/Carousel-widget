@@ -30,4 +30,13 @@ const testCarousel = new Carousel([{
   scrollPerClick: 1,
 });
 
+const testCarousel2 = new Carousel([], {
+  rootRefId: 'placeForCarousel#2',
+  dimension: 'X',
+  visibleItems: 3,
+  activeItems: 1,
+  scrollSpeed: 1000,
+  scrollPerClick: 1,
+});
+
 document.addEventListener('DOMContentLoaded', alert('On the top is an example of a carousel, on the bottom in dotted border is the current realisation ( both super weak atm)!'));
