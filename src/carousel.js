@@ -4,17 +4,23 @@ class Carousel{
     this.values = values;
     this.settings = settings;
     this.init();
-    this.instanceRef = document.querySelector(`.slider${this.carouselId}`);
-    this.instanceRef.querySelector(`.next`).addEventListener('click',this.scrollNext);
-    this.instanceRef.querySelector(`.prev`).addEventListener('click',this.scrollPrevious);
+    // this.instanceRef = document.querySelector(`.slider${this.carouselId}`);
+    // this.instanceRef.querySelector(`.next`).addEventListener('click',this.scrollNext);
+    // this.instanceRef.querySelector(`.prev`).addEventListener('click',this.scrollPrevious);
   }
   scrollNext = () => {
-    console.log(`Scrolling to the next element, carousel: ${this.carouselId}`);
+    this.offset -= 1;
+    this.draw();
   }
 
   scrollPrevious = () => {
-    console.log(`Scrolling to the next element, carousel: ${this.carouselId}`);
+    this.offset += 1;
+    this.draw();
   }
+
+  formatIndexWithOffset = (indexWithOffset) => indexWithOffset % this.values.length >= 0
+    ? indexWithOffset % this.values.length
+    : indexWithOffset % this.values.length + this.values.length;
 
   init(){
     if(!this.settings.rootRefId){
@@ -22,43 +28,42 @@ class Carousel{
     }
     this.carouselId = Carousel.id + 1;
     Carousel.id += 1;
+    this.offset = 0;
     this.draw();
   }
+
+  getAllElementsMarkup = () => this.values
+  .reduce((elementsMarkup, element, index,valuesArray) => {
+    return (index ===0 || index ===valuesArray.length - 1)
+    ? elementsMarkup + `<div class="content">
+      <img src="${valuesArray[this.formatIndexWithOffset(index + this.offset)].picture}" alt="">
+      <h3>${valuesArray[this.formatIndexWithOffset(index + this.offset)].title}</h3>
+      <p>${valuesArray[this.formatIndexWithOffset(index + this.offset)].description}</p>
+    </div>`
+    : elementsMarkup + `<div class="content active">
+      <img src="${valuesArray[this.formatIndexWithOffset(index + this.offset)].picture}" alt="">
+      <h3>${valuesArray[this.formatIndexWithOffset(index + this.offset)].title}</h3>
+      <p>${valuesArray[this.formatIndexWithOffset(index + this.offset)].description}</p>
+    </div>`;
+    },'');
+
+  getButtonsMarkup = () => `<div class="buttons">
+    <button class="next">NEXT</button>
+    <button class="prev">PREV</button>
+  </div>`;
+
   draw(){
     const slider = document.createElement('div');
      slider.classList.add(`slider`);
      slider.classList.add(`slider${this.carouselId}`);
-     slider.insertAdjacentHTML('afterbegin',`<div class="content">
-        <img src="https://placekitten.com/210/210" alt="">
-        <h3>title1</h3>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus, architecto!</p>
-      </div>
-      <div class="content active">
-        <img src="https://placekitten.com/200/200" alt="">
-        <h3>title2</h3>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus, architecto!</p>
-      </div>
-      <div class="content active">
-        <img src="http://placebear.com/200/200" alt="">
-        <h3>title3</h3>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus, architecto!</p>
-      </div>
-      <div class="content active">
-        <img src="http://placebear.com/210/210" alt="">
-        <h3>title4</h3>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus, architecto!</p>
-      </div>
-      <div class="content">
-        <img src="http://placebear.com/205/205" alt="">
-        <h3>title5</h3>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus, architecto!</p>
-      </div>
-      <div class="buttons">
-        <button class="next">NEXT</button>
-        <button class="prev">PREV</button>
-      </div>
-    </div>`);
+     slider.insertAdjacentHTML('afterbegin', this.getAllElementsMarkup());
+     slider.insertAdjacentHTML('beforeend', this.getButtonsMarkup());
+    document.getElementById(this.settings.rootRefId).innerHTML = '';
     document.getElementById(this.settings.rootRefId).appendChild(slider);
+
+    this.instanceRef = document.querySelector(`.slider${this.carouselId}`);
+    this.instanceRef.querySelector(`.next`).addEventListener('click',this.scrollNext);
+    this.instanceRef.querySelector(`.prev`).addEventListener('click',this.scrollPrevious);
   }
 }
 
