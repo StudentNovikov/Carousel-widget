@@ -48,7 +48,6 @@
 
 .slider{
   position:relative;
-  display: flex;
   justify-content: space-around;
   margin:50px 0;
   background: aliceblue;
@@ -56,6 +55,14 @@
   border: 2px solid gray;
   border-radius: 5px;
   padding:10px;
+}
+
+.slider-x{
+  display:flex;
+}
+
+.slider-y{
+  width: 500px;
 }
 
 .slider img{
@@ -84,7 +91,7 @@
 
 .buttons button{
   border: 2px solid goldenrod;
-  background-color:rgba(0,0,0,0.7);
+  background-color:rgba(0,0,0,0.82);
   color:goldenrod;
   cursor: pointer;
   padding:13px 15px;
@@ -92,7 +99,15 @@
   outline:none;
 }
 
-.buttons button:hover {
+.buttons button:hover:enabled {
   background-color: rgba(0,0,0,0.95);
   color:red;
 }
+
+.buttons button:disabled{
+  background-color: rgba(23,23,23,0.4);
+  color:white;
+  cursor:default;
+  border:2px dotted goldenrod;
+}
+
