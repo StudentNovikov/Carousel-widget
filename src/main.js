@@ -59,27 +59,13 @@ const testCarousel2 = new Carousel([{
   scrollPerClick: 2,
 });
 
-const testCarousel3 = new Carousel([{
-  picture: 'https://placebear.com/300/300',
-  title: 'CAT #1',
-  description: 'This cat is a nice one for sure ',
-}, {
-  picture: 'https://placebear.com/320/320',
-  title: 'CAT #2',
-  description: 'Not bad at all',
-}, {
-  picture: 'https://placebear.com/250/250',
-  title: 'CAT #3',
-  description: 'Huge and dangerous',
-}, {
-  picture: 'https://placekitten.com/298/298',
-  title: 'CAT #4',
-  description: 'Black and white, do u like it?',
-}, {
-  picture: 'https://placebear.com/235/235',
-  title: 'CAT #5',
-  description: 'I wish i had a cat like this',
-}], {
+const testCarousel3 = new Carousel('alreadyWithElements', {
+  rootRefId: 'placeForCarousel3',
+  visibleItems: 4,
+  activeItems: 2,
+});
+
+const testCarousel4 = new Carousel('alreadyWithElementsFixed', {
   rootRefId: 'placeForCarousel3',
   visibleItems: 4,
   activeItems: 2,

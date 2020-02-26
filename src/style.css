@@ -4,42 +4,8 @@
   box-sizing: border-box;
 }
 
-.carousel{
-  width:80%;
-  margin: 0 auto;
-  border: 1px red solid;
-  margin-bottom:100px;
-}
-
-.carousel{
-  display:grid;
-  grid-template-columns: 1fr 9fr 1fr;
-}
-
-.carousel-container{
-  display: flex;
-  justify-content: center;
-  flex: 10% 80% 10%;
-  width:80%;
-  margin: 0 auto;
-  border: 3px black dotted;
-}
-
-.carousel-inner{
-  display:grid;
-  grid-template-columns: repeat(3, 1fr);
-  align-items: center;
-  grid-column-gap: 10px;
-}
-
-.carousel-item{
-  border: 2px greenyellow striped;
-}
-
-.placeForCarousel{
-  width:80%;
-  border:3px greenyellow solid;
-  margin-top: 100px;
+.container{
+  display:flex;
 }
 
 .btn{

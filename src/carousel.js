@@ -1,7 +1,13 @@
 class Carousel{
   static id = 0;
   constructor(values,settings){
-    this.values = values;
+
+    try{
+    if((typeof (values)) === 'string'){
+      this.values = this.parseValues(values);
+    } else if((typeof (values)) === 'object'){
+      this.values = values;
+    }
     this.settings = {};
 
     this.settings.rootRefId = settings.rootRefId;
@@ -11,7 +17,9 @@ class Carousel{
     this.settings.scrollSpeed = settings.scrollSpeed || 1000;
     this.settings.scrollPerClick = settings.scrollPerClick || 1;
     this.init();
-
+    } catch (error) {
+      console.log('Carousel creation is impossible with given attributes');
+    }
   }
 
   init(){
@@ -26,6 +34,24 @@ class Carousel{
     this.drawButtons();
     this.addClickListeners();
     this.addSwipeListeners();
+  }
+
+  parseValues(values){
+    try{
+      const element = document.getElementById(values);
+      const childDivs = Array.from(element.getElementsByTagName('div'));
+
+      return childDivs.reduce((valuesArray,currentDiv) => {
+        const picture = currentDiv.getElementsByTagName('img')[0].getAttribute('src');
+        const title = currentDiv.getElementsByTagName('h3')[0].innerHTML;
+        const description = currentDiv.getElementsByTagName('p')[0].innerHTML;
+        return [...valuesArray,{picture,title,description}];
+      },[])
+    } catch(error) {
+        console.log('We could not parse given template, try again');
+        console.log(`${error.name} : ${error.message}`);
+        throw error;
+    }
   }
 
   disableButtons = () => {
