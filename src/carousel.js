@@ -11,6 +11,19 @@ class Carousel{
     this.settings.scrollSpeed = settings.scrollSpeed || 1000;
     this.settings.scrollPerClick = settings.scrollPerClick || 1;
     this.init();
+
+  }
+
+  init(){
+    if(!this.settings.rootRefId){
+      console.log(`No rootReference, can't draw element`);
+    }
+    this.carouselId = Carousel.id + 1;
+    Carousel.id += 1;
+    this.offset = 0;
+    this.createSliderContainer();
+    this.draw();
+    this.drawButtons();
   }
 
   disableButtons = () => {
@@ -36,7 +49,6 @@ class Carousel{
         scrollCount += 1;
         obj.offset -= 1;
         obj.draw();
-        obj.disableButtons();
         timerId = setTimeout(displayStep,timeToScroll)
       }, timeToScroll);
   }
@@ -54,7 +66,6 @@ class Carousel{
         scrollCount += 1;
         obj.offset += 1;
         obj.draw();
-        obj.disableButtons();
         timerId = setTimeout(displayStep,timeToScroll)
       }, timeToScroll);
   }
@@ -63,15 +74,7 @@ class Carousel{
     ? indexWithOffset % this.values.length
     : indexWithOffset % this.values.length + this.values.length;
 
-  init(){
-    if(!this.settings.rootRefId){
-      console.log(`No rootReference, can't draw element`);
-    }
-    this.carouselId = Carousel.id + 1;
-    Carousel.id += 1;
-    this.offset = 0;
-    this.draw();
-  }
+
 
   isIndexItemActive = (index) => {
    const lastLowInactive = (this.settings.visibleItems - this.settings.activeItems) / 2 - 1;
@@ -102,21 +105,33 @@ class Carousel{
     <button class="prev">PREV</button>
   </div>`;
 
-  draw(){
+  createSliderContainer(){
     const slider = document.createElement('div');
-     slider.classList.add(`slider`);
-     slider.classList.add(`slider${this.carouselId}`);
-     if (this.settings.dimension === 'Y'){
+    slider.classList.add(`slider`);
+    slider.classList.add(`slider${this.carouselId}`);
+    if (this.settings.dimension === 'Y'){
       slider.classList.add(`slider-y`);
      } else {
       slider.classList.add(`slider-x`);
-     }
-     slider.insertAdjacentHTML('afterbegin', this.getAllElementsMarkup());
-     slider.insertAdjacentHTML('beforeend', this.getButtonsMarkup());
-    document.getElementById(this.settings.rootRefId).innerHTML = '';
+    }
     document.getElementById(this.settings.rootRefId).appendChild(slider);
+  }
 
+  draw(){
+    const slider = document.querySelector(`.slider${this.carouselId}`);
+    this.removeAllCarouselItems(slider);
+     slider.insertAdjacentHTML('afterbegin', this.getAllElementsMarkup());
+  }
+
+  removeAllCarouselItems(slider){
+    while (slider.childNodes.length > 1) {
+      slider.removeChild(slider.firstChild);
+    }
+  }
+
+  drawButtons(){
     this.instanceRef = document.querySelector(`.slider${this.carouselId}`);
+    this.instanceRef.insertAdjacentHTML('beforeend', this.getButtonsMarkup());
     this.instanceRef.querySelector(`.next`).addEventListener('click',this.scrollNext);
     this.instanceRef.querySelector(`.prev`).addEventListener('click',this.scrollPrevious);
   }

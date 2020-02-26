@@ -10,7 +10,7 @@ const testCarousel = new Carousel([{
   title: 'CAT #2',
   description: 'Not bad at all',
 }, {
-  picture: 'https://placekitten.com/205/205',
+  picture: 'https://placekitten.com/280/280',
   title: 'CAT #3',
   description: 'Huge and dangerous',
 }, {
@@ -52,7 +52,7 @@ const testCarousel2 = new Carousel([{
   description: 'I wish i had a cat like this',
 }], {
   rootRefId: 'placeForCarousel2',
-  dimension: 'X',
+  dimension: 'Y',
   visibleItems: 3,
   activeItems: 1,
   scrollSpeed: 1000,
