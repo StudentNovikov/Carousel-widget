@@ -24,6 +24,8 @@ class Carousel{
     this.createSliderContainer();
     this.draw();
     this.drawButtons();
+    this.addClickListeners();
+    this.addSwipeListeners();
   }
 
   disableButtons = () => {
@@ -37,21 +39,21 @@ class Carousel{
   }
 
   scrollNext = () => {
-      this.disableButtons();
-      const timeToScroll = this.settings.scrollSpeed / this.settings.scrollPerClick;
-      let scrollCount = 0;
-      let obj = this;
-      let timerId = setTimeout(function displayStep(){
-        if(scrollCount === obj.settings.scrollPerClick){
-          obj.enableButtons();
-          return;
-        }
-        scrollCount += 1;
-        obj.offset -= 1;
-        obj.draw();
-        timerId = setTimeout(displayStep,timeToScroll)
-      }, timeToScroll);
-  }
+    this.disableButtons();
+    const timeToScroll = this.settings.scrollSpeed / this.settings.scrollPerClick;
+    let scrollCount = 0;
+    let obj = this;
+    let timerId = setTimeout(function displayStep(){
+      if(scrollCount === obj.settings.scrollPerClick){
+        obj.enableButtons();
+        return;
+      }
+      scrollCount += 1;
+      obj.offset -= 1;
+      obj.draw();
+      timerId = setTimeout(displayStep,timeToScroll)
+    }, timeToScroll);
+    }
 
   scrollPrevious = () => {
       this.disableButtons();
@@ -132,8 +134,65 @@ class Carousel{
   drawButtons(){
     this.instanceRef = document.querySelector(`.slider${this.carouselId}`);
     this.instanceRef.insertAdjacentHTML('beforeend', this.getButtonsMarkup());
+  }
+
+  addClickListeners(){
     this.instanceRef.querySelector(`.next`).addEventListener('click',this.scrollNext);
     this.instanceRef.querySelector(`.prev`).addEventListener('click',this.scrollPrevious);
+  }
+
+  addSwipeListeners = () => {
+    this.instanceRef.addEventListener('touchstart', handleTouchStart, false);
+    this.instanceRef.addEventListener('touchmove', handleTouchMove, false);
+
+    let xDown = null;
+    let yDown = null;
+
+    function getTouches(evt) {
+      return evt.touches ||             // browser API
+             evt.originalEvent.touches; // jQuery
+    }
+    let obj = this;
+
+    function handleTouchStart(evt) {
+        const firstTouch = getTouches(evt)[0];
+        xDown = firstTouch.clientX;
+        yDown = firstTouch.clientY;
+    };
+
+    function handleTouchMove(evt) {
+        if ( ! xDown || ! yDown ) {
+            return;
+        }
+
+        let xUp = evt.touches[0].clientX;
+        let yUp = evt.touches[0].clientY;
+
+        let xDiff = xDown - xUp;
+        let yDiff = yDown - yUp;
+
+        if ( Math.abs( xDiff ) > Math.abs( yDiff ) ) {/*most significant*/
+            if ( xDiff > 0 ) {
+              obj.scrollPrevious();
+                /* left swipe */
+            } else {
+                /* right swipe */
+              obj.scrollNext();
+            }
+        } else {
+            if ( yDiff > 0 ) {
+              obj.scrollNext();
+                /* up swipe */
+            } else {
+              obj.scrollPrevious();
+                /* down swipe */
+            }
+        }
+        /* reset values */
+        xDown = null;
+        yDown = null;
+    };
+
   }
 }
 
