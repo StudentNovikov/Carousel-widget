@@ -1,65 +1,73 @@
+function parseValuesFromContainer(values){
+  try{
+    const element = document.getElementById(values);
+    const childDivs = Array.from(element.getElementsByTagName('div'));
+
+    return childDivs.reduce((valuesArray,currentDiv) => {
+      const picture = currentDiv.getElementsByTagName('img')[0].getAttribute('src');
+      const title = currentDiv.getElementsByTagName('h3')[0].innerHTML;
+      const description = currentDiv.getElementsByTagName('p')[0].innerHTML;
+      return [...valuesArray,{picture,title,description}];
+    },[])
+  } catch(error) {
+      console.log('We could not parse given template, try again');
+      console.log(`${error.name} : ${error.message}`);
+      throw error;
+  }
+}
+
 class Carousel{
   static id = 0;
-  constructor(values, settings){
-    // {dimension = 'X'}
+  constructor(values, {rootRefId,dimension = 'X',visibleItems = 5, activeItems = 3, scrollSpeed = 1000, scrollPerClick = 1}){
     try{
-      if((typeof (values)) === 'string'){
-        this.values = this.parseValues(values);
-      } else if((typeof (values)) === 'object'){
-        this.values = values;
-      }
-
-      this.settings = {};
-
-      this.settings.rootRefId = settings.rootRefId;
-      this.settings.dimension = settings.dimension || 'X';
-      this.settings.visibleItems = settings.visibleItems || 5;
-      this.settings.activeItems = settings.activeItems || 3;
-      this.settings.scrollSpeed = settings.scrollSpeed || 1000;
-      this.settings.scrollPerClick = settings.scrollPerClick || 1;
-      if(this.values.length === 0
-        || this.settings.activeItems < 0
-        || this.settings.visibleItems < 0
-        || this.settings.scrollSpeed < 0
-        || this.settings.scrollPerClick < 0){
-        throw new Error('');
-      }
+      this.setValues(values);
+      this.setSettings(rootRefId,dimension,visibleItems,activeItems,scrollSpeed,scrollPerClick);
+      this.validateInitParams();
       this.init();
     } catch (error) {
        console.log('Carousel creation is impossible with given attributes');
     }
   }
 
-  init(){
-    if(!this.settings.rootRefId){
-      console.log(`No rootReference, can't draw element`);
+  setValues = (values) => {
+    if((typeof (values)) === 'string'){
+      this.values = parseValuesFromContainer(values);
+    } else if((typeof (values)) === 'object'){
+      this.values = values;
+    } else throw error;
+  }
+
+  setSettings = (rootRefId,dimension,visibleItems,activeItems,scrollSpeed,scrollPerClick) => {
+    this.settings = {};
+    this.settings.rootRefId = rootRefId;
+    this.settings.dimension = dimension;
+    this.settings.visibleItems = visibleItems;
+    this.settings.activeItems = activeItems;
+    this.settings.scrollSpeed = scrollSpeed;
+    this.settings.scrollPerClick = scrollPerClick;
+  }
+
+  validateInitParams = () => {
+    if(!this.settings.rootRefId
+      || this.values.length === 0
+      || this.settings.activeItems < 0
+      || this.settings.visibleItems < 0
+      || this.settings.scrollSpeed < 0
+      || this.settings.scrollPerClick < 0){
+      throw new Error();
     }
+  }
+
+  init(){
     this.carouselId = Carousel.id + 1;
     Carousel.id += 1;
     this.offset = 0;
+
     this.createSliderContainer();
     this.draw();
     this.drawButtons();
     this.addClickListeners();
     this.addSwipeListeners();
-  }
-
-  parseValues(values){
-    try{
-      const element = document.getElementById(values);
-      const childDivs = Array.from(element.getElementsByTagName('div'));
-
-      return childDivs.reduce((valuesArray,currentDiv) => {
-        const picture = currentDiv.getElementsByTagName('img')[0].getAttribute('src');
-        const title = currentDiv.getElementsByTagName('h3')[0].innerHTML;
-        const description = currentDiv.getElementsByTagName('p')[0].innerHTML;
-        return [...valuesArray,{picture,title,description}];
-      },[])
-    } catch(error) {
-        console.log('We could not parse given template, try again');
-        console.log(`${error.name} : ${error.message}`);
-        throw error;
-    }
   }
 
   disableButtons = () => {
@@ -72,7 +80,7 @@ class Carousel{
     this.instanceRef.querySelector(`.prev`).disabled = false;
   }
 
-  scrollNext = () => {
+  scroll = (direction) => {
     this.disableButtons();
     const timeToScroll = this.settings.scrollSpeed / this.settings.scrollPerClick;
     let scrollCount = 0;
@@ -83,27 +91,18 @@ class Carousel{
         return;
       }
       scrollCount += 1;
-      obj.offset -= 1;
+      obj.offset += direction;
       obj.draw();
       timerId = setTimeout(displayStep,timeToScroll)
     }, timeToScroll);
-    }
+  }
+
+  scrollNext = () => {
+    this.scroll(-1);
+  }
 
   scrollPrevious = () => {
-      this.disableButtons();
-      const timeToScroll = this.settings.scrollSpeed / this.settings.scrollPerClick;
-      let scrollCount = 0;
-      let obj = this;
-      let timerId = setTimeout(function displayStep(){
-        if(scrollCount === obj.settings.scrollPerClick){
-          obj.enableButtons();
-          return;
-        }
-        scrollCount += 1;
-        obj.offset += 1;
-        obj.draw();
-        timerId = setTimeout(displayStep,timeToScroll)
-      }, timeToScroll);
+    this.scroll(1);
   }
 
   formatIndexWithOffset = (indexWithOffset) => indexWithOffset % this.values.length >= 0
@@ -181,8 +180,7 @@ class Carousel{
     let yDown = null;
 
     function getTouches(evt) {
-      return evt.touches ||             // browser API
-             evt.originalEvent.touches; // jQuery
+      return evt.touches || evt.originalEvent.touches;
     }
     let obj = this;
 
@@ -203,7 +201,7 @@ class Carousel{
         let xDiff = xDown - xUp;
         let yDiff = yDown - yUp;
 
-        if ( Math.abs( xDiff ) > Math.abs( yDiff ) ) {/*most significant*/
+        if ( Math.abs( xDiff ) > Math.abs( yDiff ) ) {
             if ( xDiff > 0 ) {
               obj.scrollPrevious();
                 /* left swipe */
