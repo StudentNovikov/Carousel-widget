@@ -1,24 +1,32 @@
 class Carousel{
   static id = 0;
-  constructor(values,settings){
-
+  constructor(values, settings){
+    // {dimension = 'X'}
     try{
-    if((typeof (values)) === 'string'){
-      this.values = this.parseValues(values);
-    } else if((typeof (values)) === 'object'){
-      this.values = values;
-    }
-    this.settings = {};
+      if((typeof (values)) === 'string'){
+        this.values = this.parseValues(values);
+      } else if((typeof (values)) === 'object'){
+        this.values = values;
+      }
 
-    this.settings.rootRefId = settings.rootRefId;
-    this.settings.dimension = settings.dimension || 'X';
-    this.settings.visibleItems = settings.visibleItems || 5;
-    this.settings.activeItems = settings.activeItems || 3;
-    this.settings.scrollSpeed = settings.scrollSpeed || 1000;
-    this.settings.scrollPerClick = settings.scrollPerClick || 1;
-    this.init();
+      this.settings = {};
+
+      this.settings.rootRefId = settings.rootRefId;
+      this.settings.dimension = settings.dimension || 'X';
+      this.settings.visibleItems = settings.visibleItems || 5;
+      this.settings.activeItems = settings.activeItems || 3;
+      this.settings.scrollSpeed = settings.scrollSpeed || 1000;
+      this.settings.scrollPerClick = settings.scrollPerClick || 1;
+      if(this.values.length === 0
+        || this.settings.activeItems < 0
+        || this.settings.visibleItems < 0
+        || this.settings.scrollSpeed < 0
+        || this.settings.scrollPerClick < 0){
+        throw new Error('');
+      }
+      this.init();
     } catch (error) {
-      console.log('Carousel creation is impossible with given attributes');
+       console.log('Carousel creation is impossible with given attributes');
     }
   }
 
@@ -101,8 +109,6 @@ class Carousel{
   formatIndexWithOffset = (indexWithOffset) => indexWithOffset % this.values.length >= 0
     ? indexWithOffset % this.values.length
     : indexWithOffset % this.values.length + this.values.length;
-
-
 
   isIndexItemActive = (index) => {
    const lastLowInactive = (this.settings.visibleItems - this.settings.activeItems) / 2 - 1;
@@ -207,10 +213,10 @@ class Carousel{
             }
         } else {
             if ( yDiff > 0 ) {
-              obj.scrollNext();
+              obj.scrollPrevious();
                 /* up swipe */
             } else {
-              obj.scrollPrevious();
+              obj.scrollNext();
                 /* down swipe */
             }
         }
