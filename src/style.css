@@ -36,7 +36,7 @@
 }
 
 .content{
-  opacity: 0.5;
+  opacity: 0.15;
   transition:transform 1500ms ease-in-out;
 }
 
@@ -58,6 +58,20 @@
   position:absolute;
   top:50%;
   left:15px;
+}
+
+.buttons button.next.y{
+  position:absolute;
+  left: 50% !important;
+  top: 100% !important;
+  transform: translate(-50%, -100%);
+
+}
+
+.buttons button.prev.y{
+  left:50% !important;
+  top:0% !important;
+  transform: translate(-50%, 0);
 }
 
 .buttons button{

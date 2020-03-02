@@ -48,6 +48,9 @@ class Carousel{
     if(this.initIsOver) {
       this.updateSliderContainer(dimension);
       this.draw();
+      this.removeButtons();
+      this.drawButtons();
+      this.addClickListeners();
     }
   }
 
@@ -184,6 +187,14 @@ class Carousel{
   drawButtons(){
     this.instanceRef = document.querySelector(`.slider${this.carouselId}`);
     this.instanceRef.insertAdjacentHTML('beforeend', this.getButtonsMarkup());
+    if(this.settings.dimension === 'Y'){
+      this.instanceRef.querySelector('.next').classList.add('y');
+      this.instanceRef.querySelector('.prev').classList.add('y');
+    }
+  }
+
+  removeButtons(){
+    this.instanceRef.removeChild(this.instanceRef.lastChild);
   }
 
   addClickListeners(){
