@@ -40,9 +40,9 @@
   transition:transform 1500ms ease-in-out;
 }
 
-.content:hover {
+/* .content:hover {
   transform: translate(200px, 0px);
-}
+} */
 
 .content.active{
   opacity: 1;

@@ -122,14 +122,15 @@ const testCarousel2 = new Carousel([{
 //   scrollPerClick: 5,
 // });
 
-// const testCarousel4 = new Carousel('alreadyWithElementsFixed', {
-//   rootRefId: 'placeForCarousel3',
-//   visibleItems: 4,
-//   activeItems: 2,
-// });
+const testCarousel4 = new Carousel('alreadyWithElementsFixed', {
+  rootRefId: 'placeForCarousel3',
+  visibleItems: 4,
+  activeItems: 2,
+});
 
 // const testCarousel3 = new Carousel('alreadyWithElements', {
 //   rootRefId: 'placeForCarousel3',
 //   visibleItems: 4,
 //   activeItems: 2,
 // });
+
