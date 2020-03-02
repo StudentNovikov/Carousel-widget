@@ -45,6 +45,10 @@ class Carousel{
     this.settings.activeItems = activeItems;
     this.settings.scrollSpeed = scrollSpeed;
     this.settings.scrollPerClick = scrollPerClick;
+    if(this.initIsOver) {
+      this.updateSliderContainer(dimension);
+      this.draw();
+    }
   }
 
   validateInitParams = () => {
@@ -68,6 +72,7 @@ class Carousel{
     this.drawButtons();
     this.addClickListeners();
     this.addSwipeListeners();
+    this.initIsOver = true;
   }
 
   disableButtons = () => {
@@ -90,6 +95,7 @@ class Carousel{
         obj.enableButtons();
         return;
       }
+      obj.showAnimation();
       scrollCount += 1;
       obj.offset += direction;
       obj.draw();
@@ -103,6 +109,24 @@ class Carousel{
 
   scrollPrevious = () => {
     this.scroll(1);
+  }
+
+  showAnimation = () => {
+    console.log(this.settings.rootRefId);
+    const contentList = document.getElementById(this.settings.rootRefId).querySelectorAll('.content');
+    const contentArray = [...contentList];
+    contentArray.forEach(contentDiv => {
+      contentDiv.classList.toggle('clicked');
+    })
+  }
+
+  stopAnimation(){
+    console.log(this.settings.rootRefId);
+    const contentList = document.getElementById(this.settings.rootRefId).querySelectorAll('.content');
+    const contentArray = [...contentList];
+    contentArray.forEach(contentDiv => {
+      contentDiv.classList.remove('clicked');
+    })
   }
 
   formatIndexWithOffset = (indexWithOffset) => indexWithOffset % this.values.length >= 0
@@ -148,6 +172,11 @@ class Carousel{
       slider.classList.add(`slider-x`);
     }
     document.getElementById(this.settings.rootRefId).appendChild(slider);
+  }
+
+  updateSliderContainer(newOrientation){
+    document.getElementById(this.settings.rootRefId).querySelector('.slider').classList.remove('slider-x','slider-y');
+    document.getElementById(this.settings.rootRefId).querySelector('.slider').classList.add(`slider-${newOrientation.toLowerCase()}`);
   }
 
   draw(){

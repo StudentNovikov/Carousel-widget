@@ -25,10 +25,15 @@ const firstCarousel = new Carousel([{
   rootRefId: 'placeForCarousel',
   dimension: 'X',
   visibleItems: 5,
-  activeItems: 2,
-  scrollSpeed: 600,
+  activeItems: 3,
+  scrollSpeed: 2000,
   scrollPerClick: 1,
 });
+
+setTimeout(() => {
+  firstCarousel.setSettings('placeForCarousel', 'Y', 3, 1, 2000, 1);
+}, 3000);
+
 
 // const testCarousel2 = new Carousel([{
 //   picture: 'https://placekitten.com/220/220',
@@ -52,7 +57,7 @@ const firstCarousel = new Carousel([{
 //   description: 'I wish i had a cat like this',
 // }], {
 //   rootRefId: 'placeForCarousel2',
-//   dimension: 'Y',
+//   dimension: 'X',
 //   visibleItems: 4,
 //   activeItems: 4,
 //   scrollSpeed: 1000,
