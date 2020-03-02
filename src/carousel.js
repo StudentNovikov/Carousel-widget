@@ -112,20 +112,10 @@ class Carousel{
   }
 
   showAnimation = () => {
-    console.log(this.settings.rootRefId);
     const contentList = document.getElementById(this.settings.rootRefId).querySelectorAll('.content');
     const contentArray = [...contentList];
     contentArray.forEach(contentDiv => {
       contentDiv.classList.toggle('clicked');
-    })
-  }
-
-  stopAnimation(){
-    console.log(this.settings.rootRefId);
-    const contentList = document.getElementById(this.settings.rootRefId).querySelectorAll('.content');
-    const contentArray = [...contentList];
-    contentArray.forEach(contentDiv => {
-      contentDiv.classList.remove('clicked');
     })
   }
 
@@ -217,6 +207,7 @@ class Carousel{
         const firstTouch = getTouches(evt)[0];
         xDown = firstTouch.clientX;
         yDown = firstTouch.clientY;
+        evt.preventDefault();
     };
 
     function handleTouchMove(evt) {
@@ -232,18 +223,26 @@ class Carousel{
 
         if ( Math.abs( xDiff ) > Math.abs( yDiff ) ) {
             if ( xDiff > 0 ) {
-              obj.scrollPrevious();
+              if(obj.settings.dimension === 'X'){
+                obj.scrollPrevious();
+              }
                 /* left swipe */
             } else {
                 /* right swipe */
-              obj.scrollNext();
+                if(obj.settings.dimension === 'X'){
+                   obj.scrollNext();
+                }
             }
         } else {
             if ( yDiff > 0 ) {
-              obj.scrollPrevious();
+              if(obj.settings.dimension === 'Y'){
+                obj.scrollPrevious();
+              }
                 /* up swipe */
             } else {
-              obj.scrollNext();
+              if(obj.settings.dimension === 'Y'){
+                obj.scrollNext();
+              }
                 /* down swipe */
             }
         }
