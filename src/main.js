@@ -58,8 +58,8 @@ const testCarousel2 = new Carousel([{
 }], {
   rootRefId: 'placeForCarousel2',
   dimension: 'X',
-  visibleItems: 4,
-  activeItems: 2,
+  visibleItems: 1,
+  activeItems: 1,
   scrollSpeed: 1000,
   scrollPerClick: 2,
 });

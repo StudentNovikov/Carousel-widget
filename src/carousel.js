@@ -1,22 +1,3 @@
-function parseValuesFromContainer(values){
-  try{
-    const element = document.getElementById(values);
-    const childDivs = Array.from(element.getElementsByTagName('div'));
-
-    return childDivs.reduce((valuesArray,currentDiv) => {
-      const picture = currentDiv.getElementsByTagName('img')[0].getAttribute('src');
-      const title = currentDiv.getElementsByTagName('h3')[0].innerHTML;
-      const description = currentDiv.getElementsByTagName('p')[0].innerHTML;
-      element.innerHTML = '';
-      return [...valuesArray,{picture,title,description}];
-    },[])
-  } catch(error) {
-      console.log('We could not parse given template, try again');
-      console.log(`${error.name} : ${error.message}`);
-      throw error;
-  }
-}
-
 class Carousel{
   static id = 0;
   constructor(values, {rootRefId,dimension = 'X',visibleItems = 5, activeItems = 3, scrollSpeed = 1000, scrollPerClick = 1}){
@@ -90,6 +71,7 @@ class Carousel{
   };
 
   scroll = (direction) => {
+    this.showAnimation();
     this.disableButtons();
     const timeToScroll = this.settings.scrollSpeed / this.settings.scrollPerClick;
     let scrollCount = 0;
@@ -99,7 +81,6 @@ class Carousel{
         obj.enableButtons();
         return;
       }
-      obj.showAnimation();
       scrollCount += 1;
       obj.offset += direction;
       obj.draw();
@@ -119,7 +100,7 @@ class Carousel{
     const contentList = document.getElementById(this.settings.rootRefId).querySelectorAll('.content');
     const contentArray = [...contentList];
     contentArray.forEach((contentDiv) => {
-      contentDiv.classList.toggle('clicked');
+      contentDiv.classList.add('animate');
     });
   };
 
@@ -144,6 +125,23 @@ class Carousel{
         <p>${valuesArray[this.formatIndexWithOffset(index + this.offset)].description}</p>
       </div>`
           : `${elementsMarkup}<div class="content">
+        <img src="${valuesArray[this.formatIndexWithOffset(index + this.offset)].picture}" alt="">
+        <h3>${valuesArray[this.formatIndexWithOffset(index + this.offset)].title}</h3>
+        <p>${valuesArray[this.formatIndexWithOffset(index + this.offset)].description}</p>
+      </div>`;
+      } return elementsMarkup;
+    }, '');
+
+    getAllElementsMarkupWithAnimation = () => this.values
+    .reduce((elementsMarkup, element, index, valuesArray) => {
+      if (index < this.settings.visibleItems) {
+        return (this.isIndexItemActive(index))
+          ? `${elementsMarkup}<div class="content active animate">
+        <img src="${valuesArray[this.formatIndexWithOffset(index + this.offset)].picture}" alt="">
+        <h3>${valuesArray[this.formatIndexWithOffset(index + this.offset)].title}</h3>
+        <p>${valuesArray[this.formatIndexWithOffset(index + this.offset)].description}</p>
+      </div>`
+          : `${elementsMarkup}<div class="content animate">
         <img src="${valuesArray[this.formatIndexWithOffset(index + this.offset)].picture}" alt="">
         <h3>${valuesArray[this.formatIndexWithOffset(index + this.offset)].title}</h3>
         <p>${valuesArray[this.formatIndexWithOffset(index + this.offset)].description}</p>
@@ -261,6 +259,25 @@ class Carousel{
       deltaY = null;
     }
   };
+}
+
+function parseValuesFromContainer(values){
+  try{
+    const element = document.getElementById(values);
+    const childDivs = Array.from(element.getElementsByTagName('div'));
+
+    return childDivs.reduce((valuesArray,currentDiv) => {
+      const picture = currentDiv.getElementsByTagName('img')[0].getAttribute('src');
+      const title = currentDiv.getElementsByTagName('h3')[0].innerHTML;
+      const description = currentDiv.getElementsByTagName('p')[0].innerHTML;
+      element.innerHTML = '';
+      return [...valuesArray,{picture,title,description}];
+    },[])
+  } catch(error) {
+      console.log('We could not parse given template, try again');
+      console.log(`${error.name} : ${error.message}`);
+      throw error;
+  }
 }
 
 export { Carousel };
