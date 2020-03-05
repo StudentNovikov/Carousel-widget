@@ -2,7 +2,7 @@
 import { Carousel } from './carousel.js';
 
 const firstCarousel = new Carousel([{
-  picture: 'https://placebear.com/220/220',
+  picture: 'http://lorempixel.com/200/200/cats/1/',
   title: 'CAT #1',
   description: 'This cat is a nice one for sure ',
 }, {
@@ -18,16 +18,16 @@ const firstCarousel = new Carousel([{
   title: 'CAT #4',
   description: 'Black and white, do u like it?',
 }, {
-  picture: 'https://placekitten.com/215/215',
+  picture: 'http://lorempixel.com/200/200/cats/2/',
   title: 'CAT #5',
   description: 'I wish i had a cat like this',
 }, {
-  picture: 'https://placekitten.com/215/215',
-  title: 'CAT #5',
+  picture: 'http://lorempixel.com/200/200/cats/3/',
+  title: 'CAT #6',
   description: 'I wish i had a cat like this',
 }, {
-  picture: 'https://placekitten.com/215/215',
-  title: 'CAT #5',
+  picture: 'http://lorempixel.com/200/200/cats/4/',
+  title: 'CAT #7',
   description: 'I wish i had a cat like this',
 }], {
   rootRefId: 'placeForCarousel',

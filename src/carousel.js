@@ -166,53 +166,27 @@ class Carousel {
   // }
 
   draw = () => {
+    const itemsTemplate = this.values.reduce((carouselMarkup,element) => {
+      return carouselMarkup + `<div class="item animate">
+      <img src="${element.picture}" alt="">
+      <h3>${element.title}</h3>
+      <p>${element.description}</p>
+    </div>`;
+    },'');
+
     document.getElementById(this.settings.rootRefId).innerHTML += `<div class="container slider${this.carouselId}">
     <div class="visibleContainer">
       <div class="leftbox">
         <div class="rightbox">
-          <div class="activeContainer animate">
-            <div class="item animate">
-              <img src="http://lorempixel.com/200/200/cats/1/" alt="">
-              <h3>CAT #1</h3>
-              <p>This cat is a nice one for sure </p>
-            </div><div class="item animate">
-              <img src="http://lorempixel.com/200/200/cats/2/" alt="">
-              <h3>CAT #2</h3>
-              <p>Not bad at all</p>
-            </div><div class="item animate" >
-              <img src="http://lorempixel.com/200/200/cats/3/" alt="">
-              <h3>CAT #3</h3>
-              <p>Huge and dangerous</p>
-            </div><div class="item animate">
-              <img src="http://lorempixel.com/200/200/cats/4/" alt="">
-              <h3>CAT #5</h3>
-              <p>Black and white, do u like it?</p>
-            </div><div class="item animate">
-              <img src="http://lorempixel.com/200/200/cats/5/" alt="">
-              <h3>CAT #6</h3>
-              <p>Black and white, do u like it?</p>
-            </div><div class="item animate">
-              <img src="https://placekitten.com/250/250" alt="">
-              <h3>CAT #7</h3>
-              <p>Black and white, do u like it?</p>
-            </div><div class="item animate">
-              <img src="https://placebear.com/240/240" alt="">
-              <h3>CAT #8</h3>
-              <p>Black and white, do u like it?</p>
-            </div>
+          <div class="activeContainer animate">${itemsTemplate}</div>
           </div>
-        </div>
-     </div>
-    </div>
-    <div class="buttons active">
-      <button class="prev" id="prevSmooth">PREV</button>
-      <button class="next" id="nextSmooth">NEXT</button>
-    </div>
-  </div>`;
-  // this.instanceRef = document.querySelector(`.slider${this.carouselId}`);
-    // this.slider = document.querySelector(`.slider${this.carouselId}`);
-    // this.removeAllCarouselItems(slider);
-    // slider.insertAdjacentHTML('afterbegin', this.getAllElementsMarkup());
+       </div>
+      </div>
+      <div class="buttons active">
+        <button class="prev" id="prevSmooth">PREV</button>
+        <button class="next" id="nextSmooth">NEXT</button>
+      </div>
+    </div>`;
   }
 
   // removeAllCarouselItems(slider) {
