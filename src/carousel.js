@@ -97,11 +97,11 @@ class Carousel{
   };
 
   showAnimation = () => {
-    const contentList = document.getElementById(this.settings.rootRefId).querySelectorAll('.content');
-    const contentArray = [...contentList];
-    contentArray.forEach((contentDiv) => {
-      contentDiv.classList.add('animate');
-    });
+    // const contentList = document.getElementById(this.settings.rootRefId).querySelectorAll('.content');
+    // const contentArray = [...contentList];
+    // contentArray.forEach((contentDiv) => {
+    //   contentDiv.classList.add('animate');
+    // });
   };
 
   formatIndexWithOffset = (indexWithOffset) => (indexWithOffset % this.values.length >= 0
@@ -132,22 +132,22 @@ class Carousel{
       } return elementsMarkup;
     }, '');
 
-    getAllElementsMarkupWithAnimation = () => this.values
-    .reduce((elementsMarkup, element, index, valuesArray) => {
-      if (index < this.settings.visibleItems) {
-        return (this.isIndexItemActive(index))
-          ? `${elementsMarkup}<div class="content active animate">
-        <img src="${valuesArray[this.formatIndexWithOffset(index + this.offset)].picture}" alt="">
-        <h3>${valuesArray[this.formatIndexWithOffset(index + this.offset)].title}</h3>
-        <p>${valuesArray[this.formatIndexWithOffset(index + this.offset)].description}</p>
-      </div>`
-          : `${elementsMarkup}<div class="content animate">
-        <img src="${valuesArray[this.formatIndexWithOffset(index + this.offset)].picture}" alt="">
-        <h3>${valuesArray[this.formatIndexWithOffset(index + this.offset)].title}</h3>
-        <p>${valuesArray[this.formatIndexWithOffset(index + this.offset)].description}</p>
-      </div>`;
-      } return elementsMarkup;
-    }, '');
+    // getAllElementsMarkupWithAnimation = () => this.values
+    // .reduce((elementsMarkup, element, index, valuesArray) => {
+    //   if (index < this.settings.visibleItems) {
+    //     return (this.isIndexItemActive(index))
+    //       ? `${elementsMarkup}<div class="content active animate">
+    //     <img src="${valuesArray[this.formatIndexWithOffset(index + this.offset)].picture}" alt="">
+    //     <h3>${valuesArray[this.formatIndexWithOffset(index + this.offset)].title}</h3>
+    //     <p>${valuesArray[this.formatIndexWithOffset(index + this.offset)].description}</p>
+    //   </div>`
+    //       : `${elementsMarkup}<div class="content animate">
+    //     <img src="${valuesArray[this.formatIndexWithOffset(index + this.offset)].picture}" alt="">
+    //     <h3>${valuesArray[this.formatIndexWithOffset(index + this.offset)].title}</h3>
+    //     <p>${valuesArray[this.formatIndexWithOffset(index + this.offset)].description}</p>
+    //   </div>`;
+    //   } return elementsMarkup;
+    // }, '');
 
   getButtonsMarkup = () => `<div class="buttons">
     <button class="next">NEXT</button>
