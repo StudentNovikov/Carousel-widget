@@ -10,6 +10,7 @@
   --visible-width: 1000px;
   --active-width: 600px;
   --visible-end:1200px;
+  --animation-duration: 1000ms;
 }
 
 .activeContainer div{

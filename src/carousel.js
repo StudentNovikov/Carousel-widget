@@ -4,7 +4,8 @@ class Carousel {
   }) {
     // try{
     this.setValues(values);
-    this.setSettings(rootRefId, dimension, visibleItems, activeItems, scrollSpeed, scrollPerClick);
+    this.settings = {};
+    this.setSettings({rootRefId, dimension, visibleItems, activeItems, scrollSpeed, scrollPerClick});
     this.validateInitParams();
     this.init();
     // } catch (error) {
@@ -20,14 +21,8 @@ class Carousel {
     } else throw error;
   }
 
-  setSettings = (rootRefId, dimension, visibleItems, activeItems, scrollSpeed, scrollPerClick) => {
-    this.settings = {};
-    this.settings.rootRefId = rootRefId;
-    this.settings.dimension = dimension;
-    this.settings.visibleItems = visibleItems;
-    this.settings.activeItems = activeItems;
-    this.settings.scrollSpeed = scrollSpeed;
-    this.settings.scrollPerClick = scrollPerClick;
+  setSettings = (newSettings) => {
+    Object.keys(newSettings).forEach(key => this.settings[key] = newSettings[key]);
     if (this.initIsOver) {
       this.draw();
       this.addClickListeners();
@@ -85,18 +80,18 @@ class Carousel {
 
   draw = () => {
     const itemsTemplate = this.values.reduce((carouselMarkup,element) => {
-      return carouselMarkup + `<div class="item animate">
+      return carouselMarkup + `<div class="item" style="transition: transform ${this.settings.scrollSpeed}ms, opacity 0s;">
       <img src="${element.picture}" alt="">
       <h3>${element.title}</h3>
       <p>${element.description}</p>
     </div>`;
     },'');
 
-    document.getElementById(this.settings.rootRefId).innerHTML += `<div class="container slider${this.carouselId}">
+    document.getElementById(this.settings.rootRefId).innerHTML = `<div class="container slider${this.carouselId}">
     <div class="visibleContainer">
       <div class="leftbox">
         <div class="rightbox">
-          <div class="activeContainer animate">${itemsTemplate}</div>
+          <div class="activeContainer">${itemsTemplate}</div>
           </div>
        </div>
       </div>

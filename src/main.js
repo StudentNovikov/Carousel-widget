@@ -39,7 +39,9 @@ const firstCarousel = new Carousel([{
 });
 
 // setTimeout(() => {
-//   firstCarousel.setSettings('placeForCarousel', 'Y', 3, 1, 2000, 1);
+//   firstCarousel.setSettings({
+//     scrollSpeed: 3000, scrollPerClick: 1,
+//   });
 // }, 3000);
 
 
@@ -141,4 +143,3 @@ const testCarousel4 = new Carousel('alreadyWithElementsFixed', {
 //   visibleItems: 4,
 //   activeItems: 2,
 // });
-
