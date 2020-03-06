@@ -67,7 +67,7 @@
 }
 
 .animate{
-  transition: transform 1s, opacity 0s;
+  transition: transform 1000ms, opacity 0s;
 }
 
 .buttons{

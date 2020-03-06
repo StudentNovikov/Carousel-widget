@@ -29,10 +29,7 @@ class Carousel {
     this.settings.scrollSpeed = scrollSpeed;
     this.settings.scrollPerClick = scrollPerClick;
     if (this.initIsOver) {
-      // this.updateSliderContainer(dimension);
       this.draw();
-      // this.removeButtons();
-      // this.drawButtons();
       this.addClickListeners();
     }
   }
@@ -56,7 +53,6 @@ class Carousel {
     this.index = 0;
     this.currTransl = [];
 
-    // this.createSliderContainer();
     this.draw();
 
     for (let i = 0; i < this.values.length; i += 1) {
@@ -64,21 +60,10 @@ class Carousel {
       document.querySelector(`.slider${this.carouselId}`).querySelectorAll('.item')[i]
         .addEventListener('transitionend', this.transitionCompleted, true);
     }
-    // this.drawButtons();
     this.addClickListeners();
     this.addSwipeListeners();
     this.initIsOver = true;
   }
-
-  // disableButtons = () => {
-  //   this.instanceRef.querySelector('.next').disabled = true;
-  //   this.instanceRef.querySelector('.prev').disabled = true;
-  // };
-
-  // enableButtons = () => {
-  //   this.instanceRef.querySelector('.next').disabled = false;
-  //   this.instanceRef.querySelector('.prev').disabled = false;
-  // };
 
   scroll = (direction) => {
     this.showAnimation();
@@ -97,73 +82,6 @@ class Carousel {
       timerId = setTimeout(displayStep, timeToScroll);
     }, timeToScroll);
   }
-
-  // scrollNext = () => {
-  //   this.scroll(-1);
-  // };
-
-  // scrollPrevious = () => {
-  //   this.scroll(1);
-  // };
-
-  // showAnimation = () => {
-  //   // const contentList = document.getElementById(this.settings.rootRefId).querySelectorAll('.content');
-  //   // const contentArray = [...contentList];
-  //   // contentArray.forEach((contentDiv) => {
-  //   //   contentDiv.classList.add('animate');
-  //   // });
-  // };
-
-  // formatIndexWithOffset = (indexWithOffset) => (indexWithOffset % this.values.length >= 0
-  //   ? indexWithOffset % this.values.length
-  //   : (indexWithOffset % this.values.length) + this.values.length);
-
-  // isIndexItemActive = (index) => {
-  //   const lastLowInactive = (this.settings.visibleItems - this.settings.activeItems) / 2 - 1;
-  //   const firstHighInactive = (this.settings.visibleItems
-  //      - (this.settings.visibleItems - this.settings.activeItems) / 2);
-  //   return ((index > lastLowInactive) && (index < firstHighInactive));
-  // };
-
-  // getAllElementsMarkup = () => this.values
-  //   .reduce((elementsMarkup, element, index, valuesArray) => {
-  //     if (index < this.settings.visibleItems) {
-  //       return (this.isIndexItemActive(index))
-  //         ? `${elementsMarkup}<div class="content active">
-  //       <img src="${valuesArray[this.formatIndexWithOffset(index + this.offset)].picture}" alt="">
-  //       <h3>${valuesArray[this.formatIndexWithOffset(index + this.offset)].title}</h3>
-  //       <p>${valuesArray[this.formatIndexWithOffset(index + this.offset)].description}</p>
-  //     </div>`
-  //         : `${elementsMarkup}<div class="content">
-  //       <img src="${valuesArray[this.formatIndexWithOffset(index + this.offset)].picture}" alt="">
-  //       <h3>${valuesArray[this.formatIndexWithOffset(index + this.offset)].title}</h3>
-  //       <p>${valuesArray[this.formatIndexWithOffset(index + this.offset)].description}</p>
-  //     </div>`;
-  //     } return elementsMarkup;
-  //   }, '');
-
-  // getButtonsMarkup = () => `<div class="buttons">
-  //   <button class="next">NEXT</button>
-  //   <button class="prev">PREV</button>
-  // </div>`;
-
-  // createSliderContainer() {
-  //   document.getElementById(this.settings.rootRefId).innerHTML = `<div class="slider${this.carouselId}"></div>`;
-  //   // const slider = document.createElement('div');
-  //   // slider.classList.add('slider');
-  //   // slider.classList.add(`slider${this.carouselId}`);
-  //   // if (this.settings.dimension === 'Y') {
-  //   //   slider.classList.add('slider-y');
-  //   // } else {
-  //   //   slider.classList.add('slider-x');
-  //   // }
-  //   // document.getElementById(this.settings.rootRefId).appendChild(slider);
-  // }
-
-  // updateSliderContainer(newOrientation) {
-  //   document.getElementById(this.settings.rootRefId).querySelector('.slider').classList.remove('slider-x', 'slider-y');
-  //   document.getElementById(this.settings.rootRefId).querySelector('.slider').classList.add(`slider-${newOrientation.toLowerCase()}`);
-  // }
 
   draw = () => {
     const itemsTemplate = this.values.reduce((carouselMarkup,element) => {
@@ -188,25 +106,6 @@ class Carousel {
       </div>
     </div>`;
   }
-
-  // removeAllCarouselItems(slider) {
-  //   while (slider.childNodes.length > 1) {
-  //     slider.removeChild(slider.firstChild);
-  //   }
-  // }
-
-  // drawButtons = () => {
-  //   // this.instanceRef = document.querySelector(`.slider${this.carouselId}`);
-  //   this.instanceRef.insertAdjacentHTML('beforeend', this.getButtonsMarkup());
-  //   if (this.settings.dimension === 'Y') {
-  //     this.instanceRef.querySelector('.next').classList.add('y');
-  //     this.instanceRef.querySelector('.prev').classList.add('y');
-  //   }
-  // }
-
-  // removeButtons() {
-  //   this.instanceRef.removeChild(this.instanceRef.lastChild);
-  // }
 
   addClickListeners = () => {
     document.querySelector(`.slider${this.carouselId}`).querySelector('#nextSmooth').addEventListener('click', this.scrollNext);
