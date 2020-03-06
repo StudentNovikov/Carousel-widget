@@ -34,7 +34,7 @@ const firstCarousel = new Carousel([{
   dimension: 'X',
   visibleItems: 5,
   activeItems: 3,
-  scrollSpeed: 2000,
+  scrollSpeed: 6000,
   scrollPerClick: 1,
 });
 
@@ -43,7 +43,6 @@ const firstCarousel = new Carousel([{
 //     scrollSpeed: 3000, scrollPerClick: 1,
 //   });
 // }, 3000);
-
 
 // const testCarousel2 = new Carousel([{
 //   picture: 'https://placekitten.com/220/220',

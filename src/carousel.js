@@ -92,7 +92,7 @@ class Carousel {
       <div class="leftbox">
         <div class="rightbox">
           <div class="activeContainer">${itemsTemplate}</div>
-          </div>
+        </div>
        </div>
       </div>
       <div class="buttons">
@@ -100,6 +100,10 @@ class Carousel {
         <button class="next" id="nextSmooth">NEXT</button>
       </div>
     </div>`;
+    this.updateCarouselView();
+  }
+
+  updateCarouselView = () => {
   }
 
   addClickListeners = () => {
