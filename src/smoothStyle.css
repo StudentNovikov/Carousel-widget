@@ -70,3 +70,21 @@
   transition: transform 1s, opacity 0s;
 }
 
+.buttons{
+  width: var(--visible-width);
+  z-index:100;
+  position:absolute;
+  left:var(--container-width);
+  top:100px;
+}
+
+.buttons button{
+  padding:0.5rem;
+  outline: none;
+  cursor: pointer;
+}
+
+.buttons .next{
+  left:var(--visible-width);
+  float:right;
+}

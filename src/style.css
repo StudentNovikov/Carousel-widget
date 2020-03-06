@@ -165,7 +165,7 @@
   width: var(--container-width);
   content: "";
   background-color: rgb(255, 255, 255, 1);
-  height: 93%;
+  height: 100%;
 }
 
 .rightbox::after{
@@ -182,3 +182,24 @@
   transition: transform 1s, opacity 0s;
 }
 
+.buttons{
+  width: var(--visible-width);
+  z-index:100;
+  position:absolute;
+  left:var(--container-width);
+  top:100px;
+}
+
+.buttons button{
+  padding:0.5rem;
+  outline: none;
+  cursor: pointer;
+  border-radius: 5px;
+  border: 1px solid rebeccapurple;
+  font-size: 1rem;
+}
+
+.buttons .next{
+  left:var(--visible-width);
+  float:right;
+}

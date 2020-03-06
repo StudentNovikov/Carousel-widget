@@ -182,7 +182,7 @@ class Carousel {
           </div>
        </div>
       </div>
-      <div class="buttons active">
+      <div class="buttons">
         <button class="prev" id="prevSmooth">PREV</button>
         <button class="next" id="nextSmooth">NEXT</button>
       </div>
