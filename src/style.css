@@ -88,7 +88,6 @@
 }
 
 .buttons .next{
-  left:var(--visible-width);
   float:right;
 }
 
