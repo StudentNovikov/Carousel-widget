@@ -1,0 +1,90 @@
+*{
+  margin:0;
+  padding:0;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+:root {
+  --container-width: 200px;
+  --visible-width: 1000px;
+  --active-width: 600px;
+  --visible-end:1200px;
+}
+
+.activeContainer div{
+  display:inline-block;
+}
+
+.activeContainer div img{
+  height: 200px;
+  position:relative;
+}
+
+.container{
+  width: 10000px;
+  position: relative;
+}
+
+.container::after{
+  position: absolute;
+  top: 0;
+  left: var(--container-width);
+  width: var(--container-width);
+  content: "";
+  background-color: rgb(255, 255, 255, 0.85);
+  height: 100%;
+}
+
+.visibleContainer::after{
+  position: absolute;
+  top: 0;
+  left: var(--visible-width);
+  width: var(--container-width);
+  content: "";
+  background-color: rgb(255, 255, 255, 0.85);
+  height: 100%;
+}
+
+.leftbox::after{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: var(--container-width);
+  content: "";
+  background-color: rgb(255, 255, 255, 1);
+  height: 93%;
+}
+
+.rightbox::after{
+  position: absolute;
+  top: 0;
+  left: var(--visible-end);
+  width: 100%;
+  content: "";
+  background-color: rgb(255, 255, 255, 1);
+  height: 100%;
+}
+
+.animate{
+  transition: transform 1s, opacity 0s;
+}
+
+.buttons{
+  width: var(--visible-width);
+  z-index:100;
+  position:absolute;
+  left:var(--container-width);
+  top:100px;
+}
+
+.buttons button{
+  padding:0.5rem;
+  outline: none;
+  cursor: pointer;
+}
+
+.buttons .next{
+  left:var(--visible-width);
+  float:right;
+}
